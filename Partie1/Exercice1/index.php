@@ -6,7 +6,7 @@
     </head>
     <body>
 <?php
-$db = new PDO('mysql:host=localhost;dbname=colyseum','Fireloup','Girouette301286');
+$db = new PDO('mysql:host=localhost;dbname=colyseum','Fireloup','fireloupsql');
 $clientsQuery = $db->query('SELECT * FROM clients');
 $clientsFetch = $clientsQuery->fetchAll(PDO::FETCH_ASSOC);
 

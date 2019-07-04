@@ -13,7 +13,7 @@
     
     <body class="font-family-germania">
         <?php
-        $db = new PDO('mysql:host=localhost;dbname=hospitalE2N', 'Fireloup', 'Girouette301286');
+        $db = new PDO('mysql:host=localhost;dbname=hospitalE2N', 'Fireloup', 'fireloupsql');
             $patientsInfosQuery = $db->query('SELECT patients.id,patients.firstName,patients.lastName FROM patients');
             $patientsInfosFetch = $patientsInfosQuery->fetchAll(PDO::FETCH_ASSOC);
             ?>
@@ -65,7 +65,7 @@
         <?php
 
         if ($_POST):
-            $db = new PDO('mysql:host=localhost;dbname=hospitalE2N', 'Fireloup', 'Girouette301286');
+            
             $addAppointment = $db->prepare('INSERT INTO appointments(dateHour,idPatients)VALUES(:dateTime,:idPatient)');
             $addAppointment->execute(array('dateTime'=>$_POST['date'] . ' ' . $_POST['time'],'idPatient'=>$_POST['patientName']));
         endif;

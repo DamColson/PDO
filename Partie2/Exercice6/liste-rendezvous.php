@@ -7,10 +7,10 @@
     <body>
         
         <?php
-        $db = new PDO('mysql:host=localhost;dbname=hospitalE2N', 'Fireloup', 'Girouette301286');
+        $db = new PDO('mysql:host=localhost;dbname=hospitalE2N', 'Fireloup', 'fireloupsql');
         $appointmentsQuery = $db->query('SELECT appointments.id,appointments.dateHour FROM appointments');
         $appointmentsFetch = $appointmentsQuery->fetchAll(PDO::FETCH_ASSOC);
-    
+        var_dump($appointmentsFetch);
         foreach ($appointmentsFetch as $key => $value):
             ?><p><a href="../Exercice7-8/rendezvous.php?id=<?=$value['id']?>"><?= 'Rendez vous ' . $value['id'] . ' : ' . $value['dateHour']; ?></a><a href="<?='deletion.php?id=' . $value['id']?>">X</a></p><?php
             ?><hr/><?php

@@ -65,7 +65,7 @@
         <p class="text-center h4 mt-2"><a href="../index.php">Retour à l'index</a></p>
         <?php
 //        var_dump($_POST);
-        $db = new PDO('mysql:host=localhost;dbname=hospitalE2N', 'Fireloup', 'Girouette301286');
+        $db = new PDO('mysql:host=localhost;dbname=hospitalE2N', 'Fireloup', 'fireloupsql');
         $testMail = $db->prepare('SELECT COUNT(patients.mail) AS mail FROM patients WHERE patients.mail=:mail');
         $testMail->execute(array('mail' => $_POST['mail']));
         $testMailFetch = $testMail->fetchAll(PDO::FETCH_ASSOC);

@@ -16,7 +16,7 @@ $id;
     <body>
         <div class="text-center">
             <?php
-            $db = new PDO('mysql:host=localhost;dbname=hospitalE2N', 'Fireloup', 'Girouette301286');
+            $db = new PDO('mysql:host=localhost;dbname=hospitalE2N', 'Fireloup', 'fireloupsql');
             $appointmentsInfosPrepare = $db->prepare('SELECT appointments.id,appointments.dateHour,patients.firstname,patients.lastname FROM appointments INNER JOIN patients ON appointments.idPatients=patients.id WHERE appointments.id=:id');
             $appointmentsInfosPrepare->execute(array('id' => $_GET['id']));
             $appointmentsInfosFetch = $appointmentsInfosPrepare->fetchAll(PDO::FETCH_ASSOC);
@@ -62,7 +62,6 @@ $id;
         <p class="text-center h4 mt-2"><a href="../index.php"</a>Retour à l'index</p>
         <?php
 
-        echo $id;
         if ($_POST['newDate'] != '' && $_POST['newHour'] != ''):
             $db = new PDO('mysql:host=localhost;dbname=hospitalE2N', 'Fireloup', 'Girouette301286');
             $modifyAppointmentsDateHour = $db->prepare('UPDATE appointments SET dateHour = :newDateHour WHERE id=:id');

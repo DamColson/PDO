@@ -19,10 +19,13 @@ endif;
     <body>
         <div class="text-center">
             <?php
-            $db = new PDO('mysql:host=localhost;dbname=hospitalE2N', 'Fireloup', 'Girouette301286');
+            $db = new PDO('mysql:host=localhost;dbname=hospitalE2N', 'Fireloup', 'fireloupsql');
             $patientsInfosPrepare = $db->prepare('SELECT patients.id,patients.lastname,patients.firstname,patients.mail,patients.phone,patients.birthdate,GROUP_CONCAT(appointments.dateHour) AS RDV FROM patients INNER JOIN appointments ON patients.id = appointments.idPatients WHERE patients.id=:id');
+            $appointmentsInfosPrepare = $db->query('SELECT appointments.id FROM appointments INNER JOIN patients ON patients.id = appointments.idPatients');
+            $appointmentsInfosFetch = $appointmentsInfosPrepare->fetchAll(PDO::FETCH_ASSOC);
             $patientsInfosPrepare->execute(array('id' => $_GET['id']));
             $patientsInfosFetch = $patientsInfosPrepare->fetchAll(PDO::FETCH_ASSOC);
+          
             
             foreach ($patientsInfosFetch as $key => $value):
             ?><p><?= 'Nom : ' . $value['lastname']?></p>
@@ -34,7 +37,7 @@ endif;
                 <?php
                 if($value['RDV']!=NULL):
                 for ($i=0;$i<sizeof(explode(',',$value['RDV']));$i++):
-                    ?><p><a href="../Exercice7-8/rendezvous.php"><?= 'Le ' . ucfirst(strftime('%A %d %B %Y',strtotime(explode(' ',explode(',',$value['RDV'])[$i])[0]))) . ' à ' . explode(' ',explode(',',$value['RDV'])[$i])[1]?></a></p><?php
+                    ?><p><a href="<?='../Exercice7-8/rendezvous.php?id=' . $appointmentsInfosFetch[$i]['id'] ?>"><?='Le ' . ucfirst(strftime('%A %d %B %Y',strtotime(explode(' ',explode(',',$value['RDV'])[$i])[0]))) . ' à ' . explode(' ',explode(',',$value['RDV'])[$i])[1]?></a></p><?php
                 endfor;
                 endif;
                 ?>
@@ -86,9 +89,8 @@ endif;
         <p class="h3 text-center"><a href="../Exercice2/liste-patients.php">Retour à la liste des patients</a></p>
         <p class="text-center h4 mt-2"><a href="../index.php">Retour à l'index</a></p>
         <?php
-        var_dump($_GET);
-        var_dump($_POST);
-        echo $id;
+ 
+      
         if ($_POST['newFirstName'] != ''):
             $db = new PDO('mysql:host=localhost;dbname=hospitalE2N', 'Fireloup', 'Girouette301286');
             $modifyPatientFirstName = $db->prepare('UPDATE patients SET firstname = :newFirstName WHERE id=:id');
