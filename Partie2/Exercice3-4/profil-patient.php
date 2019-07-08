@@ -25,7 +25,6 @@ endif;
             $appointmentsInfosFetch = $appointmentsInfosPrepare->fetchAll(PDO::FETCH_ASSOC);
             $patientsInfosPrepare->execute(array('id' => $_GET['id']));
             $patientsInfosFetch = $patientsInfosPrepare->fetchAll(PDO::FETCH_ASSOC);
-          
             
             foreach ($patientsInfosFetch as $key => $value):
             ?><p><?= 'Nom : ' . $value['lastname']?></p>
